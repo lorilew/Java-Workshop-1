@@ -15,6 +15,10 @@ public class AVLTree {
 		this.left = empty();
 		this.right = empty();
 	}
+	/**
+	 * Creates an empty AVLTree with isEmpty set to true, 
+	 * and all other instance variables default values.
+	 */
 	public AVLTree(){
 		this.isEmpty = true;
 	}
