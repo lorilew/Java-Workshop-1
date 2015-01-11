@@ -4,7 +4,11 @@ public class AVLTree {
 	private boolean isEmpty;
 	private AVLTree left;
 	private AVLTree right;
-	
+	/**
+	 * Create a new AVL tree with a root of Person root. 
+	 * Left and Right refer to empty AVL trees.
+	 * @param root
+	 */
 	public AVLTree(Person root){
 		this.isEmpty = false;
 		this.root = root;
