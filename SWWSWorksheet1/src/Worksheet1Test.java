@@ -173,7 +173,7 @@ public class Worksheet1Test {
 		
 		List expected = List.cons(1, List.cons(2, List.cons(3, List.cons(4, List.empty()))));
 		List result = Worksheet1.merge(a,b);
-		System.out.println(Worksheet1.merge(a,b));
+		//System.out.println(Worksheet1.merge(a,b));
 		assertEquals(expected, result);
 	}
 	/*
@@ -190,5 +190,59 @@ public class Worksheet1Test {
 		} catch (IllegalStateException e) {
 			assert(true);
 		}
+	}
+	//////////////////////////////////////////////////////////////////
+	/*
+	 * Testing removeDuplicates(List a) - empty list
+	 */
+	@Test
+	public void ex4test1(){
+		List a = List.empty();
+		try{
+			Worksheet1.removeDuplicates(a);
+			assert(false);
+		} catch (IllegalStateException e){
+			assert(true);
+		}
+	}
+	/*
+	 * Testing removeDuplicates(List a) - single value list
+	 */
+	@Test
+	public void ex4test2(){
+		List a = List.cons(1,List.empty());
+		List expected = List.cons(1,List.empty());
+		List result = Worksheet1.removeDuplicates(a);
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing removeDuplicates(List a) - two duplicate values
+	 */
+	@Test
+	public void ex4test3(){
+		List a = List.cons(1, List.cons(1,List.empty()));
+		String expected = List.cons(1,List.empty()).toString();
+		String result = Worksheet1.removeDuplicates(a).toString();
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing removeDuplicates(List a) - three duplicate values
+	 */
+	@Test
+	public void ex4test4(){
+		List a =  List.cons(2, List.cons(5, List.cons(5, List.cons(5, List.empty()))));
+		List expected = List.cons(2, List.cons(5, List.empty()));
+		List result = Worksheet1.removeDuplicates(a);
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing removeDuplicates(List a) - no duplicates
+	 */
+	@Test
+	public void ex4test5(){
+		List a =  List.cons(1, List.cons(2, List.cons(3, List.cons(4, List.empty()))));
+		List expected = List.cons(1, List.cons(2, List.cons(3, List.cons(4, List.empty()))));
+		List result = Worksheet1.removeDuplicates(a);
+		assertEquals(expected, result);
 	}
 }

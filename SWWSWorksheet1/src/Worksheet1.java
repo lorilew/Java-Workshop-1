@@ -85,10 +85,28 @@ public class Worksheet1 {
 	}
 	
 	
-//
-//	static List removeDuplicates(List a) {
-//	}
-//
+	/**
+	 * Given a sorted List, this method returns a copy of the list a with all
+	 * its duplicate copies removed.
+	 * @param a
+	 * @return
+	 */
+	public static List removeDuplicates(List a) {
+		if(a.isEmpty()){
+			throw new IllegalStateException();
+		}
+		else if(a.getTail().isEmpty()){
+			return a;
+		}
+		else{
+			if(a.getHead()==a.getTail().getHead()){
+				return removeDuplicates(a.getTail());
+			}else{
+				return List.cons(a.getHead(), removeDuplicates(a.getTail()));
+			}
+		}
+	}
+
 //	public static Tree mirror(Tree t) {
 //	}
 //
@@ -100,13 +118,6 @@ public class Worksheet1 {
 //
 //	public static Tree delete(Tree a, int x) {
 //	}
-	private static List getLastElement(List l){
-		if(l.getTail().isEmpty()){
-			return l;
-		}
-		else{
-			return getLastElement(l.getTail());
-		}
-	}
+	
 
 }
