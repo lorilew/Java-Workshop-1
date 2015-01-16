@@ -106,18 +106,92 @@ public class Worksheet1 {
 			}
 		}
 	}
-
-//	public static Tree mirror(Tree t) {
-//	}
-//
-//	public static String showDescending(Tree a) {
-//	}
-//
-//	public static int max(Tree a) {
-//	}
-//
-//	public static Tree delete(Tree a, int x) {
-//	}
+	/**
+	 * Given a Tree t, constructs a new Tree that is the mirror image of t
+	 * along the left-right axis.
+	 * @param t A Tree of integers.
+	 * @return A new Tree that is the mirror image of t.
+	 */
+	public static Tree mirror(Tree t) {
+		if(t.getEmpty()){
+			return new Tree();
+		} else {
+			return new Tree(t.getValue(),mirror(t.getRight()), mirror(t.getLeft()));
+		}
+	}
+	/**
+	 * REQUIRED: The tree is a binary search tree, lower values on the left
+	 * and higher values on the right.
+	 * Given a Binary Search Tree a, this methods writes a string containing all
+	 * the values of the tree in descending order.
+	 * Example: 5 4 3 2 1
+	 * @param a A binary search tree of integer values.
+	 * @return A string of all values stored in tree, in descending order.
+	 */
+	public static String showDescending(Tree a) {
+		if(a.empty){
+			return "";
+		} else {
+			return "" + showDescending(a.getRight()) + a.getValue() + " "  + showDescending(a.getLeft());
+		}
+	}
+	/**
+	 * REQUIRED: The tree is a binary search tree, lower values on the left
+	 * and higher values on the right.
+	 * Assuming the Tree a is a binary search tree, this method returns the max
+	 * value of the tree.
+	 * @param a A binary search tree of integer values.
+	 * @return The max value in tree.
+	 */
+	public static int max(Tree a) {
+		if(a.empty){
+			throw new IllegalStateException();
+		}
+		else if(a.getRight().empty){
+			return a.getValue();
+		}else{
+			return Math.max(a.getValue(), max(a.getRight()));
+		}
+	}
+	/**
+	 * REQUIRED: The tree is a binary search tree, lower values on the left
+	 * and higher values on the right.
+	 * Assuming a is a binary search tree, this method deletes the value x
+	 * from a and returns the resulting tree. 
+	 * If the value x does not exist in tree, an exception is thrown.
+	 * @param a A binary search tree of integer values.
+	 * @param x an integer value to be removed from tree a.
+	 * @return A new tree of the results of removing x from a.
+	 */
+	public static Tree delete(Tree a, int x) {
+		if(a.empty){
+			throw new IllegalStateException(x + " does not exist in tree " + a);
+		}
+		else if(x<a.getValue()){
+			return new Tree(a.getValue(), delete(a.getLeft(), x), a.getRight());
+		}
+		else if(x>a.getValue()){
+			return new Tree(a.getValue(), a.getLeft(), delete(a.getRight(), x));
+		}else{
+			// found x!
+			// if x has no children
+			if(a.getLeft().empty && a.getRight().empty){
+				return new Tree();
+			}
+			// if x has one child
+			else if(a.getLeft().empty){
+				return a.getRight();
+			}
+			else if(a.getRight().empty){
+				return a.getLeft();
+			}
+			// if x has two children
+			else{
+				return new Tree(max(a), a.getLeft(), 
+						delete(a.getRight(), max(a)));
+			}
+		}
+	}
 	
 
 }
