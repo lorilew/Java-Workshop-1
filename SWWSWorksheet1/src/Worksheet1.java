@@ -13,7 +13,8 @@ public class Worksheet1 {
 	 */
 	public static boolean allPositive(List a) {
 		if(a.isEmpty()){
-			throw new IllegalStateException();
+			throw new IllegalStateException("Cannot check all values"
+					+ " are positive in an empty tree.");
 		}
 		else if(a.getTail().isEmpty()){
 			if(a.getHead()>=0){
@@ -37,7 +38,8 @@ public class Worksheet1 {
 	 */
 	public static boolean sorted(List a){
 		if(a.isEmpty()){
-			throw new IllegalStateException();
+			throw new IllegalStateException("Cannot check if an empty "
+					+ "tree is sorted.");
 		}
 		else if(a.getTail().isEmpty()){
 			return true;
@@ -62,7 +64,7 @@ public class Worksheet1 {
 	 */
 	public static List merge(List a, List b) {
 		if(!a.isEmpty() && !b.isEmpty() && !sorted(a) && !sorted(b)){
-			throw new IllegalStateException();
+			throw new IllegalStateException("Cannot merge unsorted trees.");
 		} else {
 			return auxMerge(a,b);
 		}
@@ -93,7 +95,8 @@ public class Worksheet1 {
 	 */
 	public static List removeDuplicates(List a) {
 		if(a.isEmpty()){
-			throw new IllegalStateException();
+			throw new IllegalStateException("Cannot remove duplicates "
+					+ "from an empty tree");
 		}
 		else if(a.getTail().isEmpty()){
 			return a;
@@ -116,23 +119,34 @@ public class Worksheet1 {
 		if(t.getEmpty()){
 			return new Tree();
 		} else {
-			return new Tree(t.getValue(),mirror(t.getRight()), mirror(t.getLeft()));
+			return new Tree(t.getValue(),mirror(t.getRight()), 
+					mirror(t.getLeft()));
 		}
 	}
 	/**
 	 * REQUIRED: The tree is a binary search tree, lower values on the left
 	 * and higher values on the right.
 	 * Given a Binary Search Tree a, this methods writes a string containing all
-	 * the values of the tree in descending order.
-	 * Example: 5 4 3 2 1
+	 * the values of the tree in descending order. Throws an exception if the tree
+	 * is empty.
+	 * Example: "5 4 3 2 1"
 	 * @param a A binary search tree of integer values.
 	 * @return A string of all values stored in tree, in descending order.
 	 */
 	public static String showDescending(Tree a) {
 		if(a.empty){
+			throw new IllegalStateException("Cannot showDescending on an empty tree");
+		}else{
+			String s = auxShowDescending(a);
+			return s.substring(0, s.length()-1);
+		}
+	}
+	private static String auxShowDescending(Tree a){
+		if(a.empty){
 			return "";
 		} else {
-			return "" + showDescending(a.getRight()) + a.getValue() + " "  + showDescending(a.getLeft());
+			return "" + auxShowDescending(a.getRight()) + a.getValue() + " "  
+					+ auxShowDescending(a.getLeft());
 		}
 	}
 	/**
@@ -145,7 +159,7 @@ public class Worksheet1 {
 	 */
 	public static int max(Tree a) {
 		if(a.empty){
-			throw new IllegalStateException();
+			throw new IllegalStateException("Cannot find max of an empty tree.");
 		}
 		else if(a.getRight().empty){
 			return a.getValue();
@@ -187,8 +201,8 @@ public class Worksheet1 {
 			}
 			// if x has two children
 			else{
-				return new Tree(max(a), a.getLeft(), 
-						delete(a.getRight(), max(a)));
+				int m = max(a.getLeft());
+				return new Tree(m, delete(a.getLeft(),m), a.getRight());
 			}
 		}
 	}

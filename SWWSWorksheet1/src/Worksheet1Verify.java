@@ -113,7 +113,7 @@ public class Worksheet1Verify {
 			new Tree(8,new Tree(6,new Tree(),new Tree()),new Tree()));
 		
 	String expected = "8 6 5 4 3 1";
-	
+	System.out.println(Worksheet1.showDescending(t1));
 	assertEquals(Worksheet1.showDescending(t1), expected );
 		
 	}

@@ -316,9 +316,12 @@ public class Worksheet1Test {
 	@Test
 	public void ex6test1(){
 		Tree t1 = new Tree();
-		String expected = "";
-		String result = Worksheet1.showDescending(t1);
-		assertEquals(expected, result);
+		try{
+			Worksheet1.showDescending(t1);
+			assert(false);
+		} catch (IllegalStateException e){
+			assert(true);
+		}
 	}
 	/*
 	 * Testing showDescending(Tree t) single value tree
@@ -326,7 +329,7 @@ public class Worksheet1Test {
 	@Test
 	public void ex6test2(){
 		Tree t2 = new Tree(2);
-		String expected = "2 ";
+		String expected = "2";
 		String result = Worksheet1.showDescending(t2);
 		assertEquals(expected, result);
 	}
@@ -337,7 +340,7 @@ public class Worksheet1Test {
 	public void ex6test3(){
 		Tree t3 = new Tree(10, new Tree(7, new Tree(3), new Tree(8)), 
 				new Tree());
-		String expected = "10 8 7 3 ";
+		String expected = "10 8 7 3";
 		String result = Worksheet1.showDescending(t3);
 		assertEquals(expected, result);
 	}
@@ -349,7 +352,7 @@ public class Worksheet1Test {
 		Tree t4 = new Tree(10, new Tree(7, new Tree(3), new Tree(8)), 
 				new Tree(15, new Tree(14), new Tree(20, new Tree(), 
 						new Tree(90))));
-		String expected = "90 20 15 14 10 8 7 3 ";
+		String expected = "90 20 15 14 10 8 7 3";
 		String result = Worksheet1.showDescending(t4);
 		assertEquals(expected, result);
 	}
@@ -504,8 +507,10 @@ public class Worksheet1Test {
 	public void ex8test7(){
 		Tree t = new Tree(20, new Tree(10), new Tree(30, new Tree(25, 
 				new Tree(21), new Tree(26)), new Tree(40)));
-		Tree expected = new Tree(20, new Tree(10), new Tree(30, new Tree(26, 
-				new Tree(21), new Tree()), new Tree(40)));
+		
+		Tree expected =  new Tree(20, new Tree(10), new Tree(30, new Tree(21, 
+				new Tree(), new Tree(26)), new Tree(40)));
+		
 		assertEquals(Worksheet1.delete(t,25), expected);
 		
 	}
@@ -516,9 +521,11 @@ public class Worksheet1Test {
 	public void ex8test8(){
 		Tree t = new Tree(20, new Tree(10), new Tree(30, new Tree(25, 
 				new Tree(21), new Tree(26)), new Tree(40)));
-		Tree expected = new Tree(20, new Tree(10), new Tree(40, new Tree(25, 
-				new Tree(21), new Tree(26)), new Tree()));
+		
+		Tree expected =  new Tree(20, new Tree(10), new Tree(26, new Tree(25, new Tree(21), new Tree()), new Tree(40)));
+		
 		assertEquals(Worksheet1.delete(t,30), expected);
 		
 	}
+	
 }
