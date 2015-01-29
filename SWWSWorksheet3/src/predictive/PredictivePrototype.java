@@ -64,6 +64,13 @@ public class PredictivePrototype {
 		return buffer.toString();
 	}
 	/**
+	 * Given a numeric signature this method searches through a dictionary found in
+	 * usr/share/dict/words and returns the list of possible matching words.
+	 * The returned list is all lower case possible matches.
+	 * This method is inefficient because it has to check every single word in the 
+	 * dictionary each time the method is called.
+	 * @param signature A string of numbers representing the numeric signature of a word.
+	 * @return A set of strings of all possible word matches.
 	 */
 	public static Set<String> signatureToWords(String signature){
 		HashSet<String> sigMatches = new HashSet<String>();
@@ -78,7 +85,9 @@ public class PredictivePrototype {
 		        //System.out.println(line);
 		    	if(line.length()==signature.length()){
 		    		if(wordToSignature(line).equals(signature)){
-		    			sigMatches.add(line);
+		    			line = line.toLowerCase();
+		    			if(!(sigMatches.contains(line)))
+		    				sigMatches.add(line);
 		    		}
 		    	}
 		    }
@@ -95,7 +104,7 @@ public class PredictivePrototype {
 		return sigMatches;
 	}
 	public static void main(String[] args) {
+		System.out.println(signatureToWords("2"));
 		
-		System.out.println(signatureToWords(wordToSignature("william")));
 	}
 }
