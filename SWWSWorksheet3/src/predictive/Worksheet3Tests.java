@@ -105,4 +105,13 @@ public class Worksheet3Tests {
 		Set<String> result = PredictivePrototype.signatureToWords(sig);
 		assertEquals(expected, result);
 	}
+	///////////////////////////////////////////////////////////
+	/*
+	 * Testing Words2SigProto class
+	 */
+	@Test
+    public void shouldVerifyParameters() {
+        Words2SigProto.main(new String[]{"home", "cat"});
+        
+    }
 }

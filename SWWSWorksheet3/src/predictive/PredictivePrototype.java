@@ -67,8 +67,12 @@ public class PredictivePrototype {
 	 * Given a numeric signature this method searches through a dictionary found in
 	 * usr/share/dict/words and returns the list of possible matching words.
 	 * The returned list is all lower case possible matches.
-	 * This method is inefficient because it has to check every single word in the 
-	 * dictionary each time the method is called.
+	 * 
+	 * This method is inefficient because it has to open the file 'words' and 
+	 * check every single word in the dictionary each time the method is called.
+	 * (for each word it needs to predict). IO processes are quite slow in comparison
+	 * to accessing data from stored variables.
+	 * 
 	 * @param signature A string of numbers representing the numeric signature of a word.
 	 * @return A set of strings of all possible word matches.
 	 */
@@ -103,8 +107,5 @@ public class PredictivePrototype {
 		}
 		return sigMatches;
 	}
-	public static void main(String[] args) {
-		System.out.println(signatureToWords("2"));
-		
-	}
+	
 }
