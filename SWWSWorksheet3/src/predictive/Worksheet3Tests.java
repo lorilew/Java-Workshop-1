@@ -56,6 +56,31 @@ public class Worksheet3Tests {
 	}
 //////////////////////////////////////////////////////////////////////////
 	/*
+	 * Testing isValidWord(String word)
+	 */
+	@Test
+	public void isValidWordtest1(){
+		String word = "hello's";
+		assertFalse(PredictivePrototype.isValidWord(word));
+	}
+	/*
+	 * Testing isValidWord(String word)
+	 */
+	@Test
+	public void isValidWordtest2(){
+		String word = "Boo";
+		assertTrue(PredictivePrototype.isValidWord(word));
+	}
+	/*
+	 * Testing isValidWord(String word)
+	 */
+	@Test
+	public void isValidWordtest3(){
+		String word = "";
+		assertTrue(PredictivePrototype.isValidWord(word));
+	}
+//////////////////////////////////////////////////////////////////////////
+	/*
 	 * Testing signatureToWords() 
 	 */
 	@Test
@@ -107,19 +132,23 @@ public class Worksheet3Tests {
 	}
 	///////////////////////////////////////////////////////////
 	/*
-	 * Testing Words2SigProto class
+	 * Testing Word2SigProto class 
+	 * VISUAL TEST
 	 */
 	@Test
-    public void shouldVerifyParameters() {
+    public void verifyParamsForWords2SigProto() {
+		System.out.println("Test: Words2SigProto Class");
         Words2SigProto.main(new String[]{"home", "cat"});
-        
+        System.out.println();
     }
 	/*
 	 * Testing Sigs2WordsProto
+	 * VISUAL TEST
 	 */
 	@Test
-    public void shouldVerifyParameters2() {
+    public void verifyParamsForSigs2WordsProto() {
+		System.out.println("Test: Sigs2WordsProto Class");
         Sigs2WordsProto.main(new String[]{"4663", "228"});
-        
+        System.out.println();
     }
 }

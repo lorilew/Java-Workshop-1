@@ -87,7 +87,7 @@ public class PredictivePrototype {
 		    String line;
 		    while ((line = reader.readLine()) != null) {
 		        //System.out.println(line);
-		    	if(line.length()==signature.length()){
+		    	if(line.length()==signature.length() && isValidWord(line)){
 		    		if(wordToSignature(line).equals(signature)){
 		    			line = line.toLowerCase();
 		    			if(!(sigMatches.contains(line)))
@@ -107,5 +107,21 @@ public class PredictivePrototype {
 		}
 		return sigMatches;
 	}
-	
+	/**
+	 * This method returns a boolean indicating that the given string is a valid word and 
+	 * does not contain non-alphabetical characters.
+	 * @param word A string containing a single word.
+	 * @return A boolean indicating whether the word given is valid.
+	 */
+	protected static boolean isValidWord(String word){
+		word = word.toLowerCase();
+		char check;
+		for(int i=0; i<word.length(); i++){
+			check = word.charAt(i);
+			if((check<97 || check>122)){
+				return false;
+			}
+		}
+		return true;
+	}
 }
