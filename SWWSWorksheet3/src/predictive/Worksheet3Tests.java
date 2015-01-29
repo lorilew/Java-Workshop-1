@@ -114,4 +114,12 @@ public class Worksheet3Tests {
         Words2SigProto.main(new String[]{"home", "cat"});
         
     }
+	/*
+	 * Testing Sigs2WordsProto
+	 */
+	@Test
+    public void shouldVerifyParameters2() {
+        Sigs2WordsProto.main(new String[]{"4663", "228"});
+        
+    }
 }
