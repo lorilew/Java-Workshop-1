@@ -1,5 +1,15 @@
 package predictive;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class PredictivePrototype {
 	/**
 	 * Keyboard layout for phone.
@@ -16,8 +26,17 @@ public class PredictivePrototype {
 	 * 
 	 * wordToSigniture() takes a word and returns a numeric signature as shown
 	 * in the table above.
+	 * 
 	 * If the word has any non-alphabetic characters, it replaces them with
 	 * a " " (space) in the resulting string. 
+	 * 
+	 * This method uses a bufferedString, as it is more efficient
+	 * than just appending to a string. A String is an immutable object, 
+	 * so every time it is "appended" a new String object is created, and the old String 
+	 * object is left for GC. It takes more time to create a new object rather than change 
+	 * an existing one. The bufferedString method just creates a single object, 
+	 * which is mutable.
+	 * 
 	 * @param word A String containing a single word.
 	 * @return A string representing the numeric signature of word.
 	 */
@@ -44,5 +63,39 @@ public class PredictivePrototype {
 		}
 		return buffer.toString();
 	}
-	
+	/**
+	 */
+	public static Set<String> signatureToWords(String signature){
+		HashSet<String> sigMatches = new HashSet<String>();
+		BufferedReader reader = null;
+		
+		try {
+		    File file = new File("/usr/share/dict/words");
+		    reader = new BufferedReader(new FileReader(file));
+
+		    String line;
+		    while ((line = reader.readLine()) != null) {
+		        //System.out.println(line);
+		    	if(line.length()==signature.length()){
+		    		if(wordToSignature(line).equals(signature)){
+		    			sigMatches.add(line);
+		    		}
+		    	}
+		    }
+
+		} catch (IOException e) {
+		    System.out.println("Words file has not been found.");
+		} finally {
+		    try {
+		        reader.close();
+		    } catch (IOException e) {
+		        System.out.println("An error occured when trying to close Words file.");
+		    }
+		}
+		return sigMatches;
+	}
+	public static void main(String[] args) {
+		
+		System.out.println(signatureToWords(wordToSignature("william")));
+	}
 }
