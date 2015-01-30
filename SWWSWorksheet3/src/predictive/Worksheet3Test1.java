@@ -2,13 +2,13 @@ package predictive;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
 
-public class Worksheet3Tests {
+public class Worksheet3Test1 {
 	/*
 	 * Testing word to Signature method - empty string
 	 */
