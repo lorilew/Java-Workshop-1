@@ -92,26 +92,28 @@ public class ListDictionary {
 		WordSig searchSig = new WordSig("", sig);
 		
 		// use binary search to find signature in dict.
-	    int index = sigSearch(this.dict, 0, this.dict.size()-1, searchSig);
-	    words.add(this.dict.get(index).getWord());
-	    
-		// once found check above for matching sigs.
-	    int tempIndex = index;
-	    while(this.dict.get(tempIndex).getSignature().equals(sig)){
-	    	if(!(words.contains(this.dict.get(tempIndex).getWord()))){
-	    		words.add(this.dict.get(tempIndex).getWord());
-	    	}
-	    	tempIndex--;
+	    //int index = sigSearch(this.dict, 0, this.dict.size()-1, searchSig);
+		int index = Collections.binarySearch(this.dict, searchSig);
+	    if(index >=0){
+		    words.add(this.dict.get(index).getWord());
+		    
+			// once found check above for matching sigs.
+		    int tempIndex = index;
+		    while(this.dict.get(tempIndex).getSignature().equals(sig)){
+		    	if(!(words.contains(this.dict.get(tempIndex).getWord()))){
+		    		words.add(this.dict.get(tempIndex).getWord());
+		    	}
+		    	tempIndex--;
+		    }
+		    // and check below to check for matching sigs.
+		    tempIndex = index;
+		    while(this.dict.get(tempIndex).getSignature().equals(sig)){
+		    	if(!(words.contains(this.dict.get(tempIndex).getWord()))){
+		    		words.add(this.dict.get(tempIndex).getWord());
+		    	}
+		    	tempIndex++;
+		    }
 	    }
-	    // and check below to check for matching sigs.
-	    tempIndex = index;
-	    while(this.dict.get(tempIndex).getSignature().equals(sig)){
-	    	if(!(words.contains(this.dict.get(tempIndex).getWord()))){
-	    		words.add(this.dict.get(tempIndex).getWord());
-	    	}
-	    	tempIndex++;
-	    }
-	    
 		return words;
 	}
 	/**
@@ -123,19 +125,19 @@ public class ListDictionary {
 	 * @param sig The String value of the signature being searched.
 	 * @return The index of the element in the list that contains the given sig.
 	 */
-	private static int sigSearch(ArrayList<WordSig> dict, int start, int end, WordSig sig){
-		int middle = (end-start)/2 + start;
-		WordSig temp = new WordSig("", dict.get(middle).getSignature());
-		if(end-start == 1){
-			return -1;
-		}else if(sig.compareTo(temp)==0){
-			return middle;
-		}else if(sig.compareTo(temp)<1){
-			return sigSearch(dict, start, middle, sig);
-		}else{
-			return sigSearch(dict, middle, end, sig);
-		}
-	}
+//	private static int sigSearch(ArrayList<WordSig> dict, int start, int end, WordSig sig){
+//		int middle = (end-start)/2 + start;
+//		WordSig temp = new WordSig("", dict.get(middle).getSignature());
+//		if(end-start == 1){
+//			return -1;
+//		}else if(sig.compareTo(temp)==0){
+//			return middle;
+//		}else if(sig.compareTo(temp)<1){
+//			return sigSearch(dict, start, middle, sig);
+//		}else{
+//			return sigSearch(dict, middle, end, sig);
+//		}
+//	}
 	
 
 }
