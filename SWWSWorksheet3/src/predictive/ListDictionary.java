@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -87,13 +88,15 @@ public class ListDictionary {
 	 * @param sig A String representing the signature to convert to words.
 	 * @return A list of Strings type words with matching signatures.
 	 */
-	public ArrayList<String> signatureToWords(String sig){
+	public Collection<String> signatureToWords(String sig){
 		ArrayList<String> words = new ArrayList<String>();
 		WordSig searchSig = new WordSig("", sig);
 		
 		// use binary search to find signature in dict.
 	    //int index = sigSearch(this.dict, 0, this.dict.size()-1, searchSig);
+		
 		int index = Collections.binarySearch(this.dict, searchSig);
+		int max = this.dict.size();
 	    if(index >=0){
 		    words.add(this.dict.get(index).getWord());
 		    
@@ -104,6 +107,8 @@ public class ListDictionary {
 		    		words.add(this.dict.get(tempIndex).getWord());
 		    	}
 		    	tempIndex--;
+		    	if(tempIndex == -1)
+		    		break;
 		    }
 		    // and check below to check for matching sigs.
 		    tempIndex = index;
@@ -112,6 +117,8 @@ public class ListDictionary {
 		    		words.add(this.dict.get(tempIndex).getWord());
 		    	}
 		    	tempIndex++;
+		    	if(tempIndex == max)
+		    		break;
 		    }
 	    }
 		return words;

@@ -1,6 +1,7 @@
 package predictive;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public interface Dictionary {
 	/**
@@ -9,7 +10,7 @@ public interface Dictionary {
 	 * @param sig A String of numbers representing a numerical signature of a word.
 	 * @return An arrayList of type String containing all the words that correspond to the given sig.
 	 */
-	public ArrayList<String> signatureToWords(String sig);
+	public Collection<String> signatureToWords(String sig);
 	/**
 	 * Keyboard layout for phone.
 	 * +----+----+----+
