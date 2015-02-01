@@ -15,12 +15,9 @@ public class Worksheet1Test {
 	@Test
 	public void ex1test1(){
 		List a = List.empty();
-		try{
-			Worksheet1.allPositive(a);
-			assert(false);
-		} catch (IllegalStateException e){
-			assert(true);
-		}
+		boolean expected = true;
+		boolean result = Worksheet1.allPositive(a);
+		assertEquals(expected, result);
 	}
 	
 	/*
@@ -76,12 +73,9 @@ public class Worksheet1Test {
 	@Test
 	public void ex2test1(){
 		List a = List.empty();
-		try{
-			Worksheet1.sorted(a);
-			assert(false);
-		} catch (IllegalStateException e){
-			assert(true);
-		}
+		boolean expected = true;
+		boolean result = Worksheet1.sorted(a);
+		assertEquals(expected, result);
 	}
 	/*
 	 * Testing sorted(List a) with single value list.
@@ -178,19 +172,19 @@ public class Worksheet1Test {
 		assertEquals(expected, result);
 	}
 	/*
-	 * Testing merge(List a, List b). UNSORTED LIST
+	 * Testing merge(List a, List b). different lengths
 	 */
 	@Test
 	public void ex3test5(){
 		
-		List b = List.cons(7, List.cons(3,List.empty()));
-		List a = List.cons(2, List.cons(4,List.empty()));
-		try{
-			Worksheet1.merge(a, b);
-			assert(false);
-		} catch (IllegalStateException e) {
-			assert(true);
-		}
+		List b = List.cons(1, List.cons(3,List.empty()));
+		List a = List.cons(2, List.cons(3,List.cons(4,List.empty())));
+		
+		List expected = List.cons(1, List.cons(2, List.cons(3, 
+				List.cons(3 ,List.cons(4, List.empty())))));
+		List result = Worksheet1.merge(a,b);
+		//System.out.println(Worksheet1.merge(a,b));
+		assertEquals(expected, result);
 	}
 	//////////////////////////////////////////////////////////////////
 	/*
@@ -199,12 +193,9 @@ public class Worksheet1Test {
 	@Test
 	public void ex4test1(){
 		List a = List.empty();
-		try{
-			Worksheet1.removeDuplicates(a);
-			assert(false);
-		} catch (IllegalStateException e){
-			assert(true);
-		}
+		List expected = List.empty();
+		List result = Worksheet1.removeDuplicates(a);
+		assertEquals(result, expected);
 	}
 	/*
 	 * Testing removeDuplicates(List a) - single value list
@@ -316,12 +307,9 @@ public class Worksheet1Test {
 	@Test
 	public void ex6test1(){
 		Tree t1 = new Tree();
-		try{
-			Worksheet1.showDescending(t1);
-			assert(false);
-		} catch (IllegalStateException e){
-			assert(true);
-		}
+		String expected = "";
+		String result = Worksheet1.showDescending(t1);
+		assertEquals(expected, result);
 	}
 	/*
 	 * Testing showDescending(Tree t) single value tree
@@ -432,12 +420,9 @@ public class Worksheet1Test {
 	@Test
 	public void ex8test1(){
 		Tree t = new Tree();
-		try{
-			Worksheet1.delete(t, 1);
-			assert(false);
-		} catch (IllegalStateException e){
-			assert(true);
-		}
+		Tree expected = new Tree();
+		Tree result = Worksheet1.delete(t, 5);
+		assertEquals(result, expected);
 	}
 	/*
 	 * Testing delete(Tree a, int x) invalid x
@@ -445,12 +430,10 @@ public class Worksheet1Test {
 	@Test
 	public void ex8test2(){
 		Tree t = new Tree(3);
-		try{
-			Worksheet1.delete(t, 1);
-			assert(false);
-		} catch (IllegalStateException e){
-			assert(true);
-		}
+		Tree expected = new Tree(3);
+		Tree result = Worksheet1.delete(t, 6);
+		System.out.println(result);
+		assertEquals(expected, result);
 	}
 	/*
 	 * Testing delete(Tree a, int x) valid x
@@ -458,12 +441,9 @@ public class Worksheet1Test {
 	@Test
 	public void ex8test3(){
 		Tree t = new Tree(3);
-		try{
-			Worksheet1.delete(t, 3);
-			assert(true);
-		} catch (IllegalStateException e){
-			assert(false);
-		}
+		Tree expected = new Tree();
+		Tree result = Worksheet1.delete(t, 3);
+		assertEquals(expected, result);
 	}
 	/*
 	 * Testing delete(Tree a, int x) childless leaf node maximum

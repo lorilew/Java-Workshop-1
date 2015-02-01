@@ -3,10 +3,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
-public class Worksheet1Test {
-
+public class Worksheet2Test {
+	
 	/*
-	 * Testing isSearchTree(Tree t) - empty tree
+	 *isHeightBalanced(t) - empty tree
 	 */
 	@Test
 	public void ex1test1() {
@@ -16,7 +16,7 @@ public class Worksheet1Test {
 		assertEquals(expected, result);
 	}
 	/*
-	 * Testing isSearchTree(Tree t) - difference of 0
+	 * isHeightBalanced(t) - difference of 0
 	 */
 	@Test
 	public void ex1test2() {
@@ -26,7 +26,7 @@ public class Worksheet1Test {
 		assertEquals(expected, result);
 	}
 	/*
-	 * Testing isSearchTree(Tree t) - difference of 1
+	 * isHeightBalanced(t)- difference of 1
 	 */
 	@Test
 	public void ex1test3() {
@@ -36,7 +36,7 @@ public class Worksheet1Test {
 		assertEquals(expected, result);
 	}
 	/*
-	 * Testing isSearchTree(Tree t) - difference of 2
+	 * isHeightBalanced(t) - difference of 2
 	 */
 	@Test
 	public void ex1test4() {
@@ -46,7 +46,7 @@ public class Worksheet1Test {
 		assertEquals(expected, result);
 	}
 	/*
-	 * Testing isSearchTree(Tree t) - difference of 2 
+	 * Testing isHeightBalanced(t) - difference of 2 
 	 */
 	@Test
 	public void ex1test5() {
@@ -58,6 +58,13 @@ public class Worksheet1Test {
 		assertEquals(expected, result);
 	}
 	/////////////////////////////////////////////////////////////
+	@Test
+	public void ex2test0(){
+		Tree t = new Tree(10, new Tree(), new Tree(20, new Tree(9), new Tree()));
+		boolean expected = false;
+		boolean result = Worksheet2.isSearchTree(t);
+		assertEquals(expected, result);
+	}
 	/*
 	 * Testing isSearchTree(Tree t) - empty tree
 	 */
@@ -209,44 +216,52 @@ public class Worksheet1Test {
 	}
 	///////////////////////////////////////////////////////////////////
 	/*
-	 * Testing insert(Tree t, int x) - no re-balance
+	 * Testing insertHB(Tree t, int x) - no re-balance
 	 */
 	@Test
 	public void ex3test1(){
 		Tree t = new Tree(5, new Tree(1), new Tree(10));
-		System.out.println(Worksheet2.insertHB(2, t));
 		Tree expected = new Tree(5, new Tree(1, new Tree(), new Tree(2)), new Tree(10));
-		assertEquals(expected, Worksheet2.insertHB(2, t));
+		Tree result = Worksheet2.insertHB(2, t);
+//		System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+//		System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
 	}
 	/*
-	 * Testing insert(Tree t, int x) - LLR re-balance
+	 * Testing insertHB(Tree t, int x) - LLR re-balance
 	 */
 	@Test
 	public void ex3test2(){
 		Tree t = new Tree(5, new Tree(3), new Tree());
-		
 		Tree expected = new Tree(3, new Tree(2), new Tree(5));
-		assertEquals(expected, Worksheet2.insertHB(2, t));
+		Tree result = Worksheet2.insertHB(2, t);
+		//System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+		//System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
 	}
 	/*
-	 * Testing insert(Tree t, int x) - RRR re-balance
+	 * Testing insertHB(Tree t, int x) - RRR re-balance
 	 */
 	@Test
 	public void ex3test3(){
 		Tree t = new Tree(5, new Tree(), new Tree(9));
-		
 		Tree expected = new Tree(9, new Tree(5), new Tree(10));
-		assertEquals(expected, Worksheet2.insertHB(10, t));
+		Tree result = Worksheet2.insertHB(10, t);
+		//System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+		//System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
 	}
 	/*
-	 * Testing insert(Tree t, int x) - RLR re-balance
+	 * Testing insertHB(Tree t, int x) - RLR re-balance
 	 */
 	@Test
 	public void ex3test4(){
 		Tree t = new Tree(5, new Tree(), new Tree(9));
-		
 		Tree expected = new Tree(8, new Tree(5), new Tree(9));
-		assertEquals(expected, Worksheet2.insertHB(8, t));
+		Tree result = Worksheet2.insertHB(8, t);
+		//System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+		//System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
 	}
 	/*
 	 * Testing insert(Tree t, int x) - LRR re-balance
@@ -254,9 +269,106 @@ public class Worksheet1Test {
 	@Test
 	public void ex3test5(){
 		Tree t = new Tree(5, new Tree(3), new Tree());
-		
 		Tree expected = new Tree(4, new Tree(3), new Tree(5));
-		assertEquals(expected, Worksheet2.insertHB(4, t));
+		Tree result  = Worksheet2.insertHB(4, t);
+		//System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+		//System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing insert(Tree t, int x) - empty tree
+	 */
+	@Test
+	public void ex3test6(){
+		Tree t = new Tree();
+		Tree expected = new Tree(9);
+		Tree result = Worksheet2.insertHB(9, t);
+		//System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+		//System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	////////////////////////////////////////////////////////////////
+	/*
+	 * Testing deleteHB - empty tree
+	 */
+	@Test
+	public void ex4test1(){
+		Tree t = new Tree();
+		Tree expected = new Tree();
+		Tree result = Worksheet2.deleteHB(t, 9);
+//		System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+//		System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing deleteHB - single node
+	 */
+	@Test
+	public void ex4test2(){
+		Tree t = new Tree(8);
+		Tree expected = new Tree();
+		Tree result = Worksheet2.deleteHB(t, 8);
+//		System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+//		System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing deleteHB - single node - x doesnt exist
+	 */
+	@Test
+	public void ex4test3(){
+		Tree t = new Tree(8);
+		Tree expected = new Tree(8);
+		Tree result = Worksheet2.deleteHB(t, 3);
+//		System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+//		System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing deleteHB - makes left outer unbalanced
+	 */
+	@Test
+	public void ex4test4(){
+		Tree t = new Tree(10, new Tree(5, new Tree(2), new Tree(7)), new Tree(17));
+		Tree expected = new Tree(5, new Tree(2), new Tree(10, new Tree(7), new Tree()));
+		Tree result = Worksheet2.deleteHB(t, 17);
+//		System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+//		System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing deleteHB - makes right outer unbalanced
+	 */
+	@Test
+	public void ex4test5(){
+		Tree t = new Tree(10, new Tree(5, new Tree(2), new Tree()), new Tree(20, new Tree(13), new Tree(30, new Tree(25), new Tree(40))));
+		Tree expected = new Tree(20, new Tree(10, new Tree(5), new Tree(13)), new Tree(30, new Tree(25), new Tree(40)));
+		Tree result = Worksheet2.deleteHB(t, 2);
+//		System.out.println(Worksheet2.isHeightBalanced(t)&& Worksheet2.isSearchTree(t));
+//		System.out.println(Worksheet2.isHeightBalanced(result)&& Worksheet2.isSearchTree(result));
+		assertEquals(expected, result);
+	}
+	/*
+	 * Testing deleteHB - makes right inner inbalance
+	 */
+	@Test
+	public void ex4test6(){
+		Tree t = new Tree(20 , new Tree(10, new Tree(9), new Tree()), new Tree(50, new Tree(30, new Tree(25), new Tree()), new Tree(60)));
+		Tree result = Worksheet2.deleteHB(t, 9);
+		boolean isSearchTree = Worksheet2.isSearchTree(result);
+		boolean isHeightBalanced = Worksheet2.isHeightBalanced(result);
+		assert(isSearchTree && isHeightBalanced);
+	}
+	/*
+	 * Testing deleteHB - makes left inner inbalance
+	 */
+	@Test
+	public void ex4test7(){
+		Tree t = new Tree(20, new Tree(10, new Tree(2), new Tree(15, new Tree(), new Tree(17))), new Tree(30, new Tree(), new Tree(50)));
+		Tree result = Worksheet2.deleteHB(t, 50);
+		boolean isSearchTree = Worksheet2.isSearchTree(result);
+		boolean isHeightBalanced = Worksheet2.isHeightBalanced(result);
+		assert(isSearchTree && isHeightBalanced);
 	}
 }
 

@@ -10,45 +10,42 @@ public class Worksheet2
 	 * indicating whether a is a binary search tree.
 	 * A binary search tree is one in which all value lower than the root are
 	 * inserted in the left subtree and all higher values are inserted in the
-	 * right subtree. And there are no duplicate values;
+	 * right subtree. And there are no duplicate values.
 	 * @param a A tree of integers.
 	 * @return A boolean true is 'a' is a binary search tree, else false.
 	 */
-    public static boolean isSearchTree(Tree a) {
-    	// empty tree
-    	if(a.empty){
-    		return true;
-    	}
-    	// leaf node
-    	else if(a.getLeft().empty && a.getRight().empty){
-    		return true;
-    	}
-    	// only has right subtree
-    	else if(a.getLeft().empty){
-    		if(a.getRight().getValue()>a.getValue()){
-    			return isSearchTree(a.getRight());
-    		}else{
-    			return false;
-    		}
-    	}
-    	// only as left subtree
-    	else if(a.getRight().empty){
-    		if(a.getLeft().getValue()<a.getValue()){
-    			return isSearchTree(a.getLeft());
-    		}else{
-    			return false;
-    		}
-    	}
-    	// has both left and right subtrees
-    	else{
-    		if(a.getLeft().getValue()<a.getValue() &&
-    				a.getRight().getValue()>a.getValue()){
-    			return isSearchTree(a.getRight()) && isSearchTree(a.getLeft());
-    		}else{
-    			return false;
-    		}
-    	}
-    }
+	public static boolean isSearchTree(Tree a){
+		if(a.empty){
+			return true;
+		}else{
+			return auxIsSearchTree(a.getLeft(), Integer.MIN_VALUE, a.value)
+					&& auxIsSearchTree(a.getRight(), a.value, Integer.MAX_VALUE);
+		}
+	}
+	/**
+	 * Helper method for isSearchTree. 
+	 * @param a A tree of integers.
+	 * @param min Minimum value in parent tree.
+	 * @param max Maximum value in parent tree.
+	 * @return A boolean true if 'a' is a binary search tree, else false.
+	 */
+	private static boolean auxIsSearchTree(Tree a, int min, int max){
+		
+		if(a.empty){
+			return true;
+		}else{
+			if(a.getValue()>min && a.getValue()<max){
+				return auxIsSearchTree(a.getLeft(), min, a.getValue()) 
+						&& auxIsSearchTree(a.getRight(), a.getValue(), max);
+				
+			}else{
+				return false;
+			}
+		}
+    	
+    	
+	}
+	
 	/**
 	 * Given a tree of integers a, check to see if 
 	 * it is height-balanced, returning a boolean value.
@@ -64,11 +61,6 @@ public class Worksheet2
 			}else{
 				return isHeightBalanced(a.getLeft()) && isHeightBalanced(a.getRight());
 			}
-//			if(Math.abs(a.getLeft().getHeight()-a.getRight().getHeight())>1){
-//				return false;
-//			}else{
-//				return true;
-//			}
 		}
     }
 
@@ -80,17 +72,8 @@ public class Worksheet2
      * @param a A height-balance tree.
      * @return A height-balance tree.
      */
-    public static Tree insertHB(int x, Tree a) {
-    	return insert(x,a);
-    }
-    /**
-     * Given a height balance  tree a and a value x that does not already exist in tree.
-     * This method will return a new height-balance tree with all values from Tree a including x.
-     * @param x An integer value that does not already exist in Tree a.
-     * @param a A binary search tree.
-     * @return A binary search tree.
-     */
-    public static Tree insert(int x, Tree a){
+    
+    public static Tree insertHB(int x, Tree a){
     	if(a.empty){
     		return new Tree(x);
     	}
@@ -133,8 +116,49 @@ public class Worksheet2
 		}
     	return t;
     }
-//    public static Tree deleteHB(Tree a, int x) {
-//    }
+    /**
+	 * REQUIRED: The tree to be a height-balanced AVL tree.
+	 * Assuming Tree a is a height-balanced AVL tree, this method deletes the value x
+	 * from a and returns the resulting AVL tree. (Assumes x exists in tree, if not
+	 * just returns the original tree)
+	 * @param a A height-balanced AVL tree of integer values.
+	 * @param x an integer value to be removed from tree a.
+	 * @return A new height-balanced AVL tree of the results of removing x from a.
+	 */
+	public static Tree deleteHB(Tree a, int x) {
+		//if empty
+		if(a.empty){
+			return a;
+		}
+		// if x is less than node
+		else if(x<a.getValue()){
+			return rebalanceTree(new Tree(a.getValue(), deleteHB(a.getLeft(), x), a.getRight()));
+		}
+		// if x is more than node
+		else if(x>a.getValue()){
+			return rebalanceTree(new Tree(a.getValue(), a.getLeft(), deleteHB(a.getRight(), x)));
+		// else it must equal node
+		}else{
+			// found x!
+			// if x has no children
+			if(a.getLeft().empty && a.getRight().empty){
+				return new Tree();
+			}
+			// if x has one child right
+			else if(a.getLeft().empty){
+				return a.getRight();
+			}
+			//if it has one child left
+			else if(a.getRight().empty){
+				return a.getLeft();
+			}
+			// if x has two children
+			else{
+				int m = max(a.getLeft());
+				return rebalanceTree(new Tree(m, deleteHB(a.getLeft(),m), a.getRight()));
+			}
+		}
+	}
     /**
      * When inserting into an AVL Tree:
      * If a new value is inserted into the left subtree of the the left subtree and
@@ -151,7 +175,7 @@ public class Worksheet2
      * @param a A binary search tree of at least height 3.
      * @return A binary search tree.
      */
-    public static Tree leftLeftRotation(Tree a){
+    static Tree leftLeftRotation(Tree a){
     	return new Tree(a.getLeft().getValue(), a.getLeft().getLeft(), new Tree(a.getValue(), a.getLeft().getRight(), a.getRight()));		
     }
     /**
@@ -171,7 +195,7 @@ public class Worksheet2
      * @return A binary search tree.
      */
   
-    public static Tree rightRightRotation(Tree a){
+    static Tree rightRightRotation(Tree a){
     	return new Tree(a.getRight().getValue(), new Tree(a.getValue(), a.getLeft(), a.getRight().getLeft()) , a.getRight().getRight());		
     }
     /**
@@ -191,8 +215,9 @@ public class Worksheet2
      * @param a A binary search tree of at least height 3.
      * @return A binary search tree.
      */
-    public static Tree leftRightRotation(Tree a){
+    static Tree leftRightRotation(Tree a){
     	return leftLeftRotation(new Tree(a.getValue(), rightRightRotation(a.getLeft()), a.getRight()));		
+    	
     }
     /**
      * When inserting into an AVL Tree:
@@ -211,9 +236,26 @@ public class Worksheet2
      * @param a A binary search tree of at least height 3.
      * @return A binary search tree .
      */
-    public static Tree rightLeftRotation(Tree a){
+    static Tree rightLeftRotation(Tree a){
     	return rightRightRotation(new Tree(a.getValue(), a.getLeft(), leftLeftRotation(a.getRight())));		
     }
-    
+    /**
+	 * REQUIRED: The tree is a binary search tree, lower values on the left
+	 * and higher values on the right.
+	 * Assuming the Tree a is a binary search tree, this method returns the max
+	 * value of the tree.
+	 * @param a A binary search tree of integer values.
+	 * @return The max value in tree.
+	 */
+	public static int max(Tree a) {
+		if(a.empty){
+			throw new IllegalStateException("Cannot find max of an empty tree.");
+		}
+		else if(a.getRight().empty){
+			return a.getValue();
+		}else{
+			return Math.max(a.getValue(), max(a.getRight()));
+		}
+	}
     
 }

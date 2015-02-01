@@ -13,8 +13,7 @@ public class Worksheet1 {
 	 */
 	public static boolean allPositive(List a) {
 		if(a.isEmpty()){
-			throw new IllegalStateException("Cannot check all values"
-					+ " are positive in an empty tree.");
+			return true;
 		}
 		else if(a.getTail().isEmpty()){
 			if(a.getHead()>=0){
@@ -38,8 +37,7 @@ public class Worksheet1 {
 	 */
 	public static boolean sorted(List a){
 		if(a.isEmpty()){
-			throw new IllegalStateException("Cannot check if an empty "
-					+ "tree is sorted.");
+			return true;
 		}
 		else if(a.getTail().isEmpty()){
 			return true;
@@ -62,16 +60,7 @@ public class Worksheet1 {
 	 * @param b A sorted list of integers.
 	 * @return A new sorted list containing all elements from a and b.
 	 */
-	public static List merge(List a, List b) {
-		if(!a.isEmpty() && !b.isEmpty() && !sorted(a) && !sorted(b)){
-			throw new IllegalStateException("Cannot merge unsorted trees.");
-		} else {
-			return auxMerge(a,b);
-		}
-		
-		
-	}
-	private static List auxMerge(List a, List b){
+	public static List merge(List a, List b){
 		if(a.isEmpty()){
 			return b;
 		}
@@ -79,10 +68,10 @@ public class Worksheet1 {
 			return a;
 		}
 		else if(a.getHead()<b.getHead()){
-			return List.cons(a.getHead(), auxMerge(a.getTail(),b));
+			return List.cons(a.getHead(), merge(a.getTail(),b));
 		}
 		else{
-			return List.cons(b.getHead(), auxMerge(a, b.getTail()));
+			return List.cons(b.getHead(), merge(a, b.getTail()));
 		}
 	}
 	
@@ -90,13 +79,12 @@ public class Worksheet1 {
 	/**
 	 * Given a sorted List, this method returns a copy of the list a with all
 	 * its duplicate copies removed.
-	 * @param a
-	 * @return
+	 * @param a A sorted List of integers
+	 * @return A sorted List of integers with duplicates removed.
 	 */
 	public static List removeDuplicates(List a) {
 		if(a.isEmpty()){
-			throw new IllegalStateException("Cannot remove duplicates "
-					+ "from an empty tree");
+			return a;
 		}
 		else if(a.getTail().isEmpty()){
 			return a;
@@ -135,7 +123,7 @@ public class Worksheet1 {
 	 */
 	public static String showDescending(Tree a) {
 		if(a.empty){
-			throw new IllegalStateException("Cannot showDescending on an empty tree");
+			return "";
 		}else{
 			String s = auxShowDescending(a);
 			return s.substring(0, s.length()-1);
@@ -171,15 +159,15 @@ public class Worksheet1 {
 	 * REQUIRED: The tree is a binary search tree, lower values on the left
 	 * and higher values on the right.
 	 * Assuming a is a binary search tree, this method deletes the value x
-	 * from a and returns the resulting tree. 
-	 * If the value x does not exist in tree, an exception is thrown.
+	 * from a and returns the resulting tree. (Assumes x exists in tree, if not
+	 * just returns the original tree)
 	 * @param a A binary search tree of integer values.
 	 * @param x an integer value to be removed from tree a.
-	 * @return A new tree of the results of removing x from a.
+	 * @return A new binary search tree of the results of removing x from a.
 	 */
 	public static Tree delete(Tree a, int x) {
 		if(a.empty){
-			throw new IllegalStateException(x + " does not exist in tree " + a);
+			return a;
 		}
 		else if(x<a.getValue()){
 			return new Tree(a.getValue(), delete(a.getLeft(), x), a.getRight());

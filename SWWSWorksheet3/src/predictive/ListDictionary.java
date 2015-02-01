@@ -45,7 +45,7 @@ public class ListDictionary {
 			{
 				line = line.toLowerCase();
 				// If word is valid add to dict.
-				if (PredictivePrototype.isValidWord(line))
+				if (isValidWord(line))
 				{
 					dict.add(new WordSig(line));
 				}
@@ -123,28 +123,74 @@ public class ListDictionary {
 	    }
 		return words;
 	}
-	/**
-	 * This method uses binary search to find the index of the given signature.
-	 * If there are duplicate entries with the same signature, it could be any of them.
-	 * @param dict An arrayList of WordSigs containing all the words in the dictionary.
-	 * @param start The index number of the start of the search area.
-	 * @param end The index number of the end of the search area.
-	 * @param sig The String value of the signature being searched.
-	 * @return The index of the element in the list that contains the given sig.
-	 */
-//	private static int sigSearch(ArrayList<WordSig> dict, int start, int end, WordSig sig){
-//		int middle = (end-start)/2 + start;
-//		WordSig temp = new WordSig("", dict.get(middle).getSignature());
-//		if(end-start == 1){
-//			return -1;
-//		}else if(sig.compareTo(temp)==0){
-//			return middle;
-//		}else if(sig.compareTo(temp)<1){
-//			return sigSearch(dict, start, middle, sig);
-//		}else{
-//			return sigSearch(dict, middle, end, sig);
-//		}
-//	}
-	
 
+	/**
+	 * Keyboard layout for phone.
+	 * +----+----+----+
+	 * | 1  | 2  | 3  |
+	 * |    |abc |def |
+	 * +----+----+----+
+	 * | 4  | 5  | 6  |
+	 * |ghi |jkl |mno |
+	 * +----+----+----+
+	 * | 7  | 8  | 9  |
+	 * |pqrs|tuv |wxyz|
+	 * +----+----+----+
+	 * 
+	 * wordToSigniture() takes a word and returns a numeric signature as shown
+	 * in the table above.
+	 * 
+	 * If the word has any non-alphabetic characters, it replaces them with
+	 * a " " (space) in the resulting string. 
+	 * 
+	 * This method uses a bufferedString, as it is more efficient
+	 * than just appending to a string. A String is an immutable object, 
+	 * so every time it is "appended" a new String object is created, and the old String 
+	 * object is left for GC. It takes more time to create a new object rather than change 
+	 * an existing one. The bufferedString method just creates a single object, 
+	 * which is mutable.
+	 * 
+	 * @param word A String containing a single word.
+	 * @return A string representing the numeric signature of word.
+	 */
+	public static String wordToSignature(String word){
+		StringBuffer buffer = new StringBuffer();
+		word = word.toLowerCase();
+		int letter;
+		for(int i=0; i<word.length(); i++){
+			// convert letter to numeric value a=0:z=25
+			letter = word.charAt(i)-97;
+			// if letters are not a:z replace with a SPACE
+			if(letter<0 || letter > 25){
+				buffer.append(" ");
+			// for letters a:r
+			}else if(letter<17){
+				buffer.append(letter/3+2);
+			// for letters s:y
+			}else if(letter <25){
+				buffer.append((letter-1)/3+2);
+			// for z
+			}else{
+				buffer.append(9);
+			}
+		}
+		return buffer.toString();
+	}
+	/**
+	 * This method returns a boolean indicating that the given string is a valid word and 
+	 * does not contain non-alphabetical characters.
+	 * @param word A string containing a single word.
+	 * @return A boolean indicating whether the word given is valid.
+	 */
+	protected static boolean isValidWord(String word){
+		word = word.toLowerCase();
+		char check;
+		for(int i=0; i<word.length(); i++){
+			check = word.charAt(i);
+			if((check<97 || check>122)){
+				return false;
+			}
+		}
+		return true;
+	}
 }
