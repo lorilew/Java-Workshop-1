@@ -1,0 +1,35 @@
+time java -cp . predictive/Sigs2WordsProto 43 968 226 33247437 8447 968 273 2 256639 43648
+
+real	0m1.058s
+user	0m1.305s
+sys	0m0.073s
+
+5x words:
+
+real	0m2.722s
+user	0m2.765s
+sys	0m0.174s
+
+
+time java -cp . predictive/Sigs2WordsList 43 968 226 33247437 8447 968 273 2 256639 436487
+43 : ge gd he hf id if 
+968 : wot you 
+226 : cam ban can 
+33247437 : decipher 
+8447 : this 
+968 : wot you 
+273 : ape are 
+2 : a c b 
+256639 : bloody 
+436487 : genius 
+
+real	0m0.683s
+user	0m0.982s
+sys	0m0.075s
+
+5x words:
+real	0m0.783s
+user	0m1.125s
+sys	0m0.051s
+
+
