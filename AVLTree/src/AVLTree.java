@@ -1,4 +1,5 @@
 
+
 public class AVLTree {
 	private Person root;
 	private boolean isEmpty;
@@ -72,6 +73,11 @@ public class AVLTree {
 		}
 		return bar;
 	}
+	/**
+	 * Adds a new Person object to the tree. 
+	 * Tree is ordered by name alphabetically.
+	 * @param p
+	 */
 	public void add(Person p){
 		addAux(this,p);
 	}
@@ -109,3 +115,4 @@ public class AVLTree {
 		System.out.println(t);
 	}
 }
+
